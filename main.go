@@ -3,10 +3,12 @@ package main
 import (
 	"context"
 	"os"
+	"log"
 	"os/signal"
 
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
+	"github.com/joho/godotenv"
 )
 // Send any text message to the bot after the bot has been started
 // 'token:=' is the assignment of the correct type, otherwise it would be e.g. 'token string = ...'
@@ -14,6 +16,9 @@ import (
 var userState = make(map[int64]string)
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+        log.Println("Error loading .env file")
+    }
 	token:= os.Getenv("TOKEN")
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
